@@ -2,9 +2,12 @@ import {Button} from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="flex items-center gap-x-5">
-      <p className="font-semibold text-gray-400"> Hello Auth</p>
-      <Button className="bg-green-400">Button</Button>
-    </div>
+    <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
+      <div className="space-y-6">
+        <h1 className="text-6xl font-semibold text-white drop-shadow-md">
+          Auth
+        </h1>
+      </div>
+    </main>
   );
 }
