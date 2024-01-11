@@ -1,5 +1,7 @@
 "use client";
 
+import {Card} from "../ui/card";
+
 interface CardWrapperProps {
   children: React.ReactNode;
   headerLabel: string;
@@ -7,8 +9,13 @@ interface CardWrapperProps {
   backButtonHref: string;
 }
 
-const CardWrapper = () => {
-  return <div>card wrapper</div>;
+const CardWrapper = ({
+  children,
+  headerLabel,
+  backButtonLabel,
+  backButtonHref,
+}: CardWrapperProps) => {
+  return <Card></Card>;
 };
 
 export default CardWrapper;
