@@ -11,6 +11,7 @@ interface BackButtonProps {
 const BackButton = ({href, label}: BackButtonProps) => {
   return (
     <Button variant={"link"} className="font-normal w-full" size="sm" asChild>
+      {/* Learning: asChild means there is a component iin it */}
       <Link href={href}>{label}</Link>
     </Button>
   );
