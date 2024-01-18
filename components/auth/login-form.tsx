@@ -13,10 +13,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {useTransition} from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import FormError from "@/components/form-error";
 import FormSuccess from "@/components/form-success";
+import {login} from "@/actions/login";
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -25,7 +27,8 @@ const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
+    // axios.post("/api/routes", values).then()
+    login(values);
   };
 
   return (
@@ -73,8 +76,8 @@ const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message="Something went wrong" />
-          <FormSuccess message="Logged in" />
+          <FormError message="" />
+          <FormSuccess message="" />
           <Button type="submit" className="w-full">
             Login
           </Button>
