@@ -21,6 +21,8 @@ import FormSuccess from "@/components/form-success";
 import {login} from "@/actions/login";
 
 const LoginForm = () => {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {email: "", password: ""},
@@ -28,7 +30,9 @@ const LoginForm = () => {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     // axios.post("/api/routes", values).then()
-    login(values);
+    startTransition(() => {
+      login(values);
+    });
   };
 
   return (
@@ -50,6 +54,7 @@ const LoginForm = () => {
                   <FormControl>
                     <Input
                       {...field}
+                      disabled={isPending}
                       placeholder="Enter your email"
                       type="email"
                     />
@@ -78,7 +83,7 @@ const LoginForm = () => {
           </div>
           <FormError message="" />
           <FormSuccess message="" />
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isPending}>
             Login
           </Button>
         </form>
