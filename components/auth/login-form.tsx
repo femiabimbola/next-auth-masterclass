@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {useTransition} from "react";
+import {useState, useTransition} from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import FormError from "@/components/form-error";
@@ -21,6 +21,8 @@ import FormSuccess from "@/components/form-success";
 import {login} from "@/actions/login";
 
 const LoginForm = () => {
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
