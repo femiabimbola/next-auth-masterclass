@@ -21,8 +21,8 @@ import FormSuccess from "@/components/form-success";
 import {login} from "@/actions/login";
 
 const LoginForm = () => {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -31,9 +31,14 @@ const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    setSuccess("");
     // axios.post("/api/routes", values).then()
     startTransition(() => {
-      login(values);
+      login(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
     });
   };
 
