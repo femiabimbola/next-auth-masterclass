@@ -18,7 +18,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import FormError from "@/components/form-error";
 import FormSuccess from "@/components/form-success";
-import {login} from "@/actions/login";
+import {Register} from "@/actions/register";
 
 const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -35,7 +35,7 @@ const RegisterForm = () => {
     setSuccess("");
     // axios.post("/api/routes", values).then()
     startTransition(() => {
-      login(values).then((data) => {
+      Register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });
