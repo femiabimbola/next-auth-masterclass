@@ -6,6 +6,7 @@
 import Credentials from "next-auth/providers/credentials"
 // import GitHub from "next-auth/providers/github"
 import type { NextAuthConfig } from "next-auth"
+import bcrypt from 'bcrypt'
 
 import { LoginSchema } from "./schemas"
 import { getUserByEmail } from "@/data/user"
@@ -20,7 +21,13 @@ export default {
 
         const user = await getUserByEmail(email)
 
+        // The reason for password is because oAuth does not need a password
+        if(!user || !user.password) return null;
+
+        const passwordsMatch = await bcrypt.compare(password, user.password)
+        if(passwordsMatch) return user;
       }
+      return null
     }
   })],
 } satisfies NextAuthConfig

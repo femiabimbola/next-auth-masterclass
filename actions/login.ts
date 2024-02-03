@@ -10,6 +10,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   if(!validatedFields.success) return{ error: "Invalid fields"}
   // For API route, you should use Nextresponse.json
 
-  return { success: "Email Sent!"}
+  const { email, password} = validatedFields.data
+
+  try{
+
+  }catch{
+    
+  }
+  
   
 }
