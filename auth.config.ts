@@ -1,6 +1,6 @@
 
 /**
- * The file is used by middleware.ts It does not support the database adapter
+ * The file is used by middleware.ts It does not support the database adapter. It does not run on the edge
  */
 
 import Credentials from "next-auth/providers/credentials"

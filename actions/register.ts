@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 
 import { RegisterSchema } from '@/schemas'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 
 export const Register = async (values: z.infer<typeof RegisterSchema >) => {
 
@@ -25,6 +26,9 @@ export const Register = async (values: z.infer<typeof RegisterSchema >) => {
 
   await db.user.create({ data: {name, email, password: hashedPassword}})
 
-  return { success: "User created successfully"}
+  return { 
+    success: "User created successfully",
+    // Response.redirect(new URL('/auth/login', ))
+  }
   
 }
