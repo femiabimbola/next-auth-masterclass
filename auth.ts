@@ -14,7 +14,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 declare module "@auth/core" {
   interface Session {
     user: {
-      role: "ADMIN" | "USER"
+      role: "ADMIN" | "USER",
      } & DefaultSession["user"]
   }
 }
