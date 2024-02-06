@@ -1,8 +1,9 @@
 // Files like this are for auth.ts
 import NextAuth, {DefaultSession} from "next-auth"
+import { UserRole } from "@prisma/client"
 
-export type ExtendedUser = DefaultSession["user"] & {
-  role: "ADMIN" | "USER"
+export type ExtendedUser = DefaultSession["user"] & {  
+  role:  UserRole //"ADMIN" | "USER"
 }
 
 declare module "next-auth" {

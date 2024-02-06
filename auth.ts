@@ -5,19 +5,20 @@
  */
 
 // import GitHub from "next-auth/providers/github"
-import NextAuth, {DefaultSession} from "next-auth"
+import NextAuth, {DefaultSession, Session} from "next-auth"
 import authConfig from "@/auth.config"
 import { getUserById } from "@/data/user"
+import { UserRole } from "@prisma/client"
 import { db } from "@/lib/db"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
-declare module "@auth/core" {
-  interface Session {
-    user: {
-      role: "ADMIN" | "USER",
-     } & DefaultSession["user"]
-  }
-}
+// declare module "@auth/core" {
+//   interface Session {
+//     user: {
+//       role:   UserRole //"ADMIN" | "USER",
+//      } & DefaultSession["user"]
+//   }
+// }
 
 export const { handlers: { GET, POST },
  auth, signIn, signOut,
@@ -30,16 +31,24 @@ export const { handlers: { GET, POST },
       token.role = existingUser.role
       return token;
     },
-    async session({ token , session}){
-      if(token.sub && session.user){
+
+    // You caan manipulate the session ID 
+    async session({ token , session} ){
+      if( session.user&& token.sub){
         session.user.id = token.sub
       }
+
       if(token.role && session.user){
         session.user.role = token.role 
       }
-
       return session;
     },
+
+    async signIn({user}) {
+      // const existingUser = await getUserById(user.id) 
+      // if(!existingUser || !existingUser.emailVerified) {return false}
+      return true;
+    }
   },
   adapter: PrismaAdapter(db),
   session: {strategy: "jwt"},

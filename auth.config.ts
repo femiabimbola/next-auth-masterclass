@@ -4,7 +4,7 @@
  */
 
 import Credentials from "next-auth/providers/credentials"
-// import GitHub from "next-auth/providers/github"
+import GitHub from "next-auth/providers/github"
 import type { NextAuthConfig } from "next-auth"
 import bcrypt from 'bcryptjs'
 
@@ -13,6 +13,7 @@ import { getUserByEmail } from "@/data/user"
 
 export default {
   providers: [
+    GitHub,
     Credentials({
     async authorize(credentials){
       const validatedFields = LoginSchema.safeParse(credentials)
