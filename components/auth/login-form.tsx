@@ -35,7 +35,7 @@ const LoginForm = () => {
     setSuccess("");
     // axios.post("/api/routes", values).then()
     startTransition(() => {
-      login(values).then((data) => {
+      login(values).then((data: any) => {
         setError(data.error);
         setSuccess(data.success);
       });

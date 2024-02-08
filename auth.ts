@@ -20,6 +20,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 //   }
 // }
 
+// auth, signIn  and signOut can only be used in server components or server actions
+
 export const { handlers: { GET, POST },
  auth, signIn, signOut,
 } = NextAuth({ 
