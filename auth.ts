@@ -39,7 +39,7 @@ export const { handlers: { GET, POST },
       if( session.user&& token.sub){
         session.user.id = token.sub
       }
-
+      
       if(token.role && session.user){
         session.user.role = token.role 
       }
@@ -55,5 +55,4 @@ export const { handlers: { GET, POST },
   adapter: PrismaAdapter(db),
   session: {strategy: "jwt"},
   ...authConfig,
-  // providers: [GitHub],
 })
