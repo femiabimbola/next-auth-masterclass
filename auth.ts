@@ -24,6 +24,22 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 export const { handlers: { GET, POST },
  auth, signIn, signOut,
 } = NextAuth({ 
+  //  It is for using your own generated pages
+  // It is located in the app folder
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error"
+  },
+  events: {
+    // for email verifing oAuth sign in email
+    async linkAccount({ user }){
+      await db.user.update({
+        where: {id: user.id},
+        data: { emailVerified: new Date()}
+      })
+    }
+  },
+
   callbacks: {
     async jwt({token}) {
       if(!token.sub) return token;
