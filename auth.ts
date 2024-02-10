@@ -4,7 +4,6 @@
  * that only works with this time of file
  */
 
-// import GitHub from "next-auth/providers/github"
 import NextAuth, {DefaultSession, Session} from "next-auth"
 import authConfig from "@/auth.config"
 import { getUserById } from "@/data/user"

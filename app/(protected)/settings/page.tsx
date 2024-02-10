@@ -1,4 +1,6 @@
-import {auth, signOut} from "@/auth";
+import {auth, signOut} from "@/auth"; // the server side
+
+// import {signOut} from "next-auth/react"; // FOR CLIENT COMPONENT
 
 const SettingsPage = async () => {
   const session = await auth();
