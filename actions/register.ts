@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 
 import { RegisterSchema } from '@/schemas'
+import { generateVerificationToken } from '@/lib/tokens'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 
 export const Register = async (values: z.infer<typeof RegisterSchema >) => {
@@ -18,16 +19,16 @@ export const Register = async (values: z.infer<typeof RegisterSchema >) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // const existingUser = await db.user.findUnique({where: {email}})
-
   const existingUser = await getUserByEmail(email)
 
   if(existingUser) return {error: "Email already in use"}
 
   await db.user.create({ data: {name, email, password: hashedPassword}})
 
+  const verificationToken = await generateVerificationToken(email)
+
   return { 
-    success: "User created successfully",
+    success: "confirmation email sent",
     // Response.redirect(new URL('/auth/login', ))
   }
   

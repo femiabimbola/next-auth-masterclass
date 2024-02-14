@@ -10,6 +10,7 @@ import { getUserById } from "@/data/user"
 import { UserRole } from "@prisma/client"
 import { db } from "@/lib/db"
 import { PrismaAdapter } from "@auth/prisma-adapter"
+import { JWT } from "next-auth/jwt"
 
 // declare module "@auth/core" {
 //   interface Session {
@@ -31,7 +32,7 @@ export const { handlers: { GET, POST },
     error: "/auth/error"
   },
   events: {
-    // for email verifing oAuth sign in email
+    // for email verifing for oAuth sign in
     async linkAccount({ user }){
       await db.user.update({
         where: {id: user.id},
@@ -50,7 +51,7 @@ export const { handlers: { GET, POST },
     },
 
     // You caan manipulate the session ID 
-    async session({ token , session} ){
+    async session({ token , session} : any){
       if( session.user&& token.sub){
         session.user.id = token.sub
       }
