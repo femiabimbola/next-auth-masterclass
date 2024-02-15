@@ -42,6 +42,8 @@ export const { handlers: { GET, POST },
   },
 
   callbacks: {
+
+    // Adding a field to the token
     async jwt({token}) {
       if(!token.sub) return token;
       const existingUser = await getUserById(token.sub)
@@ -62,9 +64,16 @@ export const { handlers: { GET, POST },
       return session;
     },
 
-    async signIn({user}) {
-      // const existingUser = await getUserById(user.id) 
-      // if(!existingUser || !existingUser.emailVerified) {return false}
+    async signIn({user, account}) {
+      // Allow OAuth without email verification
+      if(account?.provider !== "credentials") {return true}
+
+      // Prevent sign in without email verification
+      const existingUser = await getUserById(user.id) 
+      if(!existingUser?.emailVerified) {return false}
+
+      //  TODO: Add 2FA check
+
       return true;
     }
   },
