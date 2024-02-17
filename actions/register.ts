@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { getUserByEmail } from '@/data/user'
 
 import { RegisterSchema } from '@/schemas'
+import { sendVerificationEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/tokens'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 
@@ -25,7 +26,11 @@ export const Register = async (values: z.infer<typeof RegisterSchema >) => {
 
   await db.user.create({ data: {name, email, password: hashedPassword}})
 
+  // create the data on the database
   const verificationToken = await generateVerificationToken(email)
+
+  await sendVerificationEmail(verificationToken.email, verificationToken.token)
+
 
   return { 
     success: "confirmation email sent",
