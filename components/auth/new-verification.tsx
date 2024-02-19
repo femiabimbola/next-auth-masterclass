@@ -1,6 +1,7 @@
 "use client";
 
 import {BeatLoader} from "react-spinners";
+import {useCallback, useEffect} from "react";
 import CardWrapper from "@/components/auth/card-wrapper";
 import {useSearchParams} from "next/navigation";
 
@@ -9,6 +10,14 @@ import {useSearchParams} from "next/navigation";
 const NewVerification = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const onSubmit = useCallback(() => {
+    console.log(token);
+  }, [token]);
+
+  useEffect(() => {
+    onSubmit();
+  }, [onSubmit]);
+
   return (
     <CardWrapper
       headerLabel="Confirming your verification"
