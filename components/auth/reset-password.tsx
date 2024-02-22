@@ -3,7 +3,6 @@
 import CardWrapper from "@/components/auth/card-wrapper";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useSearchParams} from "next/navigation";
 import {LoginSchema} from "@/schemas";
 import * as z from "zod";
 import {
@@ -22,13 +21,7 @@ import FormSuccess from "@/components/form-success";
 import {login} from "@/actions/login";
 import Link from "next/link";
 
-const LoginForm = () => {
-  const searchParams = useSearchParams();
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email in use with different provider"
-      : "";
-
+const ResetPassword = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -53,10 +46,9 @@ const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Don't have an account"
-      backButtonHref="/auth/register"
-      showSocial
+      headerLabel="Forgot your password"
+      backButtonLabel="Back to login"
+      backButtonHref="/auth/login"
     >
       <Form {...form}>
         <form
@@ -95,20 +87,12 @@ const LoginForm = () => {
                       type="password"
                     />
                   </FormControl>
-                  <Button
-                    size="sm"
-                    variant="link"
-                    asChild
-                    className="px-0 font-normal"
-                  >
-                    <Link href="/auth/reset">Forgot Password</Link>
-                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSuccess message={success} />
           <Button
             type="submit"
@@ -123,4 +107,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ResetPassword;

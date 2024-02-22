@@ -20,6 +20,7 @@ const NewVerification = () => {
       setError("No Token found");
       return;
     }
+
     newVerification(token)
       .then((data) => {
         setSuccess(data.success);
