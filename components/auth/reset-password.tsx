@@ -3,7 +3,7 @@
 import CardWrapper from "@/components/auth/card-wrapper";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {LoginSchema} from "@/schemas";
+import {ResetSchema} from "@/schemas";
 import * as z from "zod";
 import {
   Form,
@@ -19,29 +19,28 @@ import {Button} from "@/components/ui/button";
 import FormError from "@/components/form-error";
 import FormSuccess from "@/components/form-success";
 import {login} from "@/actions/login";
-import Link from "next/link";
 
 const ResetPassword = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
-    defaultValues: {email: "", password: ""},
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
+    defaultValues: {email: ""},
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     setError("");
     setSuccess("");
     // axios.post("/api/routes", values).then()
-    startTransition(() => {
-      login(values).then((data: any) => {
-        console.log(data);
-        setError(data?.error);
-        setSuccess(data?.success);
-      });
-    });
+    // startTransition(() => {
+    //   login(values).then((data: any) => {
+    //     console.log(data);
+    //     setError(data?.error);
+    //     setSuccess(data?.success);
+    //   });
+    // });
   };
 
   return (
@@ -99,7 +98,7 @@ const ResetPassword = () => {
             className="w-full"
             disabled={isPending}
           >
-            Login
+            send reset email
           </Button>
         </form>
       </Form>
