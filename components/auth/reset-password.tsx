@@ -19,6 +19,7 @@ import {Button} from "@/components/ui/button";
 import FormError from "@/components/form-error";
 import FormSuccess from "@/components/form-success";
 import {login} from "@/actions/login";
+import {reset} from "@/actions/reset";
 
 const ResetPassword = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -34,13 +35,14 @@ const ResetPassword = () => {
     setError("");
     setSuccess("");
     // axios.post("/api/routes", values).then()
-    // startTransition(() => {
-    //   login(values).then((data: any) => {
-    //     console.log(data);
-    //     setError(data?.error);
-    //     setSuccess(data?.success);
-    //   });
-    // });
+
+    startTransition(() => {
+      reset(values).then((data: any) => {
+        console.log(data);
+        setError(data?.error);
+        setSuccess(data?.success);
+      });
+    });
   };
 
   return (
