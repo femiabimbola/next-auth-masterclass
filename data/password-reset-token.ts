@@ -10,3 +10,14 @@ export const getPasswordRestTokenByToken = async(token:string) => {
     return null
   }
 }
+
+export const getPasswordResetTokenByEmail = async(email:string) => {
+  try { 
+    const passwordRestToken = await db.passwordResetToken.findFirst({
+      where:{email}
+    })
+    return passwordRestToken;
+  } catch (error) {
+    return null
+  }
+}
