@@ -13,11 +13,13 @@ export const publicRoutes = [
  * These routes will redirect logged in users to /settings
  * @type{string[]}
  */
+// The auth is only available for logged out users
 export const authRoutes = [
   "/auth/login",
   "/auth/register",
   "/auth/error",
-  "/auth/reset"
+  "/auth/reset",
+  "/auth/new-password"
 ];
 
 
