@@ -2,7 +2,8 @@ import { getVerificationTokenByEmail } from "@/data/verification-token"
 import { getPasswordResetTokenByEmail } from "@/data/password-reset-token"
 import { v4 as uuid } from "uuid"
 import { db } from "@/lib/db"
-import crypt from "crypto"
+import crypto from "crypto"
+import { getTwoFactorTokenByEmail } from "@/data/two-factor-token"
 
 
 export const generateVerificationToken = async ( email: string) => {
@@ -43,3 +44,22 @@ export const generatePasswordResetToken = async ( email: string) => {
   })
   return  passwordResetToken
 } 
+
+// How to generate two factor auth
+export const generateTwoFactorToken = async( email: string) => {
+ const token = crypto.randomInt(100_000, 1_000_000).toString()
+ const expires = new Date(new Date().getTime() + 3600 * 1000)
+ const existingToken = await getTwoFactorTokenByEmail(email)
+
+ if(existingToken) {
+  await db.twoFactorToken.delete({
+    where: { id: existingToken.id}
+  })
+ }
+
+ const twoFactorToken = await db.twoFactorToken.create({
+  data: { email, token, expires}
+ })
+
+ return twoFactorToken;
+}
