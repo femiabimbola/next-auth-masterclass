@@ -77,8 +77,8 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(cuid())
-
+  id     String @id @default(cuid())
+  // you may ade exipres just like the Twofactor token
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
