@@ -9,5 +9,14 @@ import {
 import {Avatar, AvatarImage, AvatarFallback} from "@/components/ui/avatar";
 
 export const UserButton = () => {
-  return <div>UserButton</div>;
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Avatar>
+          <AvatarImage src="" />
+          <AvatarFallback> RO</AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+    </DropdownMenu>
+  );
 };
