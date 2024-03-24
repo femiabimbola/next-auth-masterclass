@@ -1,8 +1,9 @@
-import {auth} from "@/auth";
+import {currentUser} from "@/lib/auth";
 
+// uses hook
 const ServerPage = async () => {
-  const session = await auth();
-  return <div className="mx-auto">{JSON.stringify(session)}</div>;
+  const user = await currentUser();
+  return <div className="mx-auto">{JSON.stringify(user)}</div>;
 };
 
 export default ServerPage;
