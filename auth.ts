@@ -13,6 +13,8 @@ import {PrismaAdapter} from "@auth/prisma-adapter";
 import {JWT} from "next-auth/jwt";
 import {getTwoFactorConfirmationByUserId} from "@/data/two-factor-confirmation";
 
+// TODO: Check the source file for arhijan
+
 // declare module "@auth/core" {
 //   interface Session {
 //     user: {
@@ -71,7 +73,7 @@ export const {
       // }
 
       if (session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as Boolean;
       }
 
       return session;

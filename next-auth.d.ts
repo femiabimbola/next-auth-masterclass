@@ -1,18 +1,17 @@
 // Files like this are for auth.ts
-import NextAuth, {DefaultSession} from "next-auth"
-import { UserRole } from "@prisma/client"
+import NextAuth, {DefaultSession} from "next-auth";
+import {UserRole} from "@prisma/client";
 
-export type ExtendedUser = DefaultSession["user"] & {  
-  role:  UserRole //"ADMIN" | "USER"
-}
+export type ExtendedUser = DefaultSession["user"] & {
+  role: UserRole; //"ADMIN" | "USER"
+  isTwoFactorEnabled: boolean;
+};
 
 declare module "next-auth" {
   interface Session {
-    user:ExtendedUser,
+    user: ExtendedUser;
   }
 }
-
-
 
 // This alone should have worked
 // declare module "@auth/core" {
