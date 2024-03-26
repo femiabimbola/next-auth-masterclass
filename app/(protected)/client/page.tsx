@@ -1,12 +1,14 @@
+"use client";
+
 import {UserInfo} from "@/components/user-info";
-import {currentUser} from "@/lib/auth";
+import {useCurrentUser} from "@/hooks/use-current-user";
 
 // uses hook
-const ClientPage = async () => {
-  const user = await currentUser();
+const ClientPage = () => {
+  const user = useCurrentUser();
   return (
     <UserInfo
-      label="server componet"
+      label="client component"
       user={user}
     />
   );
