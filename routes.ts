@@ -3,10 +3,7 @@
  * They do not require authentication
  * @type{string[]}
  */
-export const publicRoutes = [
-"/",
-"/auth/new-verification"
-];
+export const publicRoutes = ["/", "/auth/new-verification"];
 
 /**
  * The route used for authentication
@@ -19,9 +16,9 @@ export const authRoutes = [
   "/auth/register",
   "/auth/error",
   "/auth/reset",
-  "/auth/new-password"
+  "/auth/new-password",
+  "/api/admin",
 ];
-
 
 /**
  * The prefix for API authentication
