@@ -1,22 +1,38 @@
-import {auth, signOut} from "@/auth"; // the server side
-import {Card} from "@/components/ui/card";
+"use client";
 
-// import {signOut} from "next-auth/react"; // FOR CLIENT COMPONENT
+import {logout} from "@/actions/logout";
+import {useCurrentUser} from "@/hooks/use-current-user";
+
+import {Card, CardHeader, CardContent} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {settings} from "@/actions/settings";
+import {useTransition} from "react";
+import {useSession} from "next-auth/react";
 
 const SettingsPage = async () => {
-  const session = await auth();
+  const [isPending, startTransition] = useTransition();
+  const {update} = useSession();
+  const onClick = () => {
+    startTransition(() => {
+      settings({
+        name: "New name",
+      }).then(() => update());
+    });
+  };
 
   return (
     <Card className="w-[600px]">
-      {/* {JSON.stringify(session)} */}
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
-      >
-        <button type="submit"> Sign Out</button>
-      </form>
+      <CardHeader>
+        <p className="text-2xl font-semibold text-center"> Settings</p>
+      </CardHeader>
+      <CardContent>
+        <Button
+          disabled={isPending}
+          onClick={onClick}
+        >
+          Update name
+        </Button>
+      </CardContent>
     </Card>
   );
 };
