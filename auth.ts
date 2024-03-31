@@ -12,6 +12,7 @@ import {db} from "@/lib/db";
 import {PrismaAdapter} from "@auth/prisma-adapter";
 import {JWT} from "next-auth/jwt";
 import {getTwoFactorConfirmationByUserId} from "@/data/two-factor-confirmation";
+import {getAccountByUserId} from "./data/account";
 
 // TODO: Check the source file for arhijan
 
@@ -53,6 +54,11 @@ export const {
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
+
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+      // !! --> turns it to a boolean
+      token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
@@ -77,6 +83,7 @@ export const {
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email;
+        session.user.isOAuth = token.isOAuth;
       }
 
       return session;
