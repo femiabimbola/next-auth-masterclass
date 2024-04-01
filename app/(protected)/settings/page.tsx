@@ -19,8 +19,13 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
+import {useCurrentUser} from "@/hooks/use-current-user";
+import FormError from "@/components/form-error";
+import FormSuccess from "@/components/form-success";
 
 const SettingsPage = async () => {
+  const user = useCurrentUser();
+
   const [isPending, startTransition] = useTransition();
   const {update} = useSession();
   const [error, setError] = useState<string | undefined>("");
@@ -28,7 +33,8 @@ const SettingsPage = async () => {
 
   const form = useForm<z.infer<typeof SettingSchema>>({
     resolver: zodResolver(SettingSchema),
-    defaultValues: {name: ""},
+    // undefined instead of "" so the name value remains the same
+    defaultValues: {name: user?.name || undefined},
   });
 
   const onSubmit = (values: z.infer<typeof SettingSchema>) => {
@@ -56,7 +62,7 @@ const SettingsPage = async () => {
             className="space-y-6"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <div className="">
+            <div className="space-y-4">
               <FormField
                 control={form.control}
                 name="name"
@@ -74,7 +80,14 @@ const SettingsPage = async () => {
                 )}
               />
             </div>
-            <Button type="submit"> Save</Button>
+            <FormError message={error} />
+            <FormSuccess message={success} />
+            <Button
+              disabled={isPending}
+              type="submit"
+            >
+              Update
+            </Button>
           </form>
         </Form>
       </CardContent>
