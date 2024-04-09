@@ -10,6 +10,7 @@ import {toast} from "sonner";
 
 /**
  * Only Admin can see this page
+ * uses the api folder and toast
  * @returns
  */
 

@@ -32,8 +32,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  //  It is for using your own generated pages
-  // It is located in the app folder
+  //  It is for using your own designed pages
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
@@ -58,6 +57,7 @@ export const {
       const existingAccount = await getAccountByUserId(existingUser.id);
 
       // !! --> turns it to a boolean
+
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;

@@ -3,7 +3,7 @@ import * as z from "zod";
 
 import {db} from "@/lib/db";
 import {SettingSchema} from "@/schemas";
-import {getUserById} from "@/data/user";
+import {getUserByEmail, getUserById} from "@/data/user";
 import {currentUser} from "@/lib/auth";
 
 export const settings = async (values: z.infer<typeof SettingSchema>) => {
@@ -14,12 +14,18 @@ export const settings = async (values: z.infer<typeof SettingSchema>) => {
   const dbUser = await getUserById(user.id);
   if (!dbUser) return {error: "Unauthorized"};
 
-  // Should not be modified
+  // Should not be modified for oauth
   if (user.isOAuth) {
     values.email = undefined;
     values.password = undefined;
     values.newPassword = undefined;
     values.isTwoFactorEnabled = undefined;
+  }
+
+  if (values.email && values.email !== user.email) {
+    const existingUser = await getUserByEmail(values.email);
+
+    if (existingUser) return {error: "Email already in use"};
   }
 
   await db.user.update({
