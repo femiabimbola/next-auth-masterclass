@@ -31,6 +31,7 @@ export const {
   auth,
   signIn,
   signOut,
+  // update
 } = NextAuth({
   //  It is for using your own designed pages
   pages: {
