@@ -24,6 +24,7 @@ import Link from "next/link";
 
 const LoginForm = () => {
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackurl");
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Email in use with different provider"
@@ -44,7 +45,7 @@ const LoginForm = () => {
     setSuccess("");
     // axios.post("/api/routes", values).then()
     startTransition(() => {
-      login(values)
+      login(values, callbackUrl)
         .then((data: any) => {
           if (data?.error) {
             form.reset();
