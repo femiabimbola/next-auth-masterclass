@@ -22,10 +22,9 @@ export default function Home() {
         </h1>
         <p className="text-white text-lg">A simple Authentication service</p>
         <div>
-          {/* remove modal and asChild */}
           <LoginButton
-            mode="modal"
-            asChild
+          // mode="modal"
+          // asChild
           >
             <Button
               variant={"secondary"}
